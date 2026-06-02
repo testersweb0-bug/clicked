@@ -150,9 +150,7 @@ describe('POST /auth/verify', () => {
   });
 
   it('returns 400 when required fields are missing', async () => {
-    const res = await request(app)
-      .post('/auth/verify')
-      .send({ walletAddress: WALLET });
+    const res = await request(app).post('/auth/verify').send({ walletAddress: WALLET });
 
     expect(res.status).toBe(400);
     expect(res.body).toHaveProperty('error');
@@ -167,7 +165,9 @@ describe('POST /auth/verify', () => {
 
   it('returns 401 when Stellar Keypair throws (malformed wallet address)', async () => {
     mockConsumeNonce.mockReturnValue(true);
-    mockVerify.mockImplementation(() => { throw new Error('invalid key'); });
+    mockVerify.mockImplementation(() => {
+      throw new Error('invalid key');
+    });
 
     const res = await request(app)
       .post('/auth/verify')
