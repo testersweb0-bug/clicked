@@ -13,8 +13,13 @@ import { redis as appRedis } from './lib/redis.js';
 import { setSocketServer } from './lib/socket.js';
 import { setOnline, setOffline, refreshPresence } from './services/presence.js';
 import { buildRpcFetcher, runForever as runStellarListener } from './services/stellarListener.js';
+import { loadEnv } from './config.js';
 
 dotenv.config();
+
+// Validate required environment variables at boot. Exits with code 1 and
+// logs the offending vars if anything is missing or malformed.
+loadEnv();
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
