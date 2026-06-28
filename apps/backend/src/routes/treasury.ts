@@ -1,9 +1,9 @@
-import { Router } from 'express';
+import { Router, type Router as RouterType } from 'express';
 import { z } from 'zod';
 import { requireAuth, type AuthRequest } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
 
-export const treasuryRouter = Router();
+export const treasuryRouter: RouterType = Router();
 
 treasuryRouter.use(requireAuth);
 
